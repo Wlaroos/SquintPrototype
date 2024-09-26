@@ -40,8 +40,8 @@ namespace VHS
                 cameraInputData.InputVectorX = Input.GetAxis("Mouse X");
                 cameraInputData.InputVectorY = Input.GetAxis("Mouse Y");
 
-                cameraInputData.ZoomClicked = Input.GetMouseButtonDown(1);
-                cameraInputData.ZoomReleased = Input.GetMouseButtonUp(1);
+                cameraInputData.ZoomClicked = Input.GetMouseButtonDown(2);
+                cameraInputData.ZoomReleased = Input.GetMouseButtonUp(2);
             }
 
             void GetMovementInputData()
