@@ -19190,8 +19190,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2637026428578227618, guid: b2a0df894ff4e104094394ec3de0a9b2,
         type: 3}
+      propertyPath: _durationInSeconds
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2637026428578227618, guid: b2a0df894ff4e104094394ec3de0a9b2,
+        type: 3}
       propertyPath: _targetFocalLength
-      value: 25
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3843716869363435367, guid: b2a0df894ff4e104094394ec3de0a9b2,
         type: 3}
