@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &242669046
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 242669047}
+  m_Layer: 0
+  m_Name: ItemHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &242669047
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 242669046}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3843716870190975468}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3843716869363435361
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,8 +160,8 @@ MonoBehaviour:
       m_PreInfinity: 0
       m_PostInfinity: 2
       m_RotationOrder: 4
-  sensitivity: {x: 40, y: 40}
-  smoothAmount: {x: 5, y: 5}
+  sensitivity: {x: 500, y: 500}
+  smoothAmount: {x: 10, y: 10}
   lookAngleMinMax: {x: -90, y: 90}
 --- !u!1 &3843716869417167139
 GameObject:
@@ -196,7 +227,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 242669047}
   m_Father: {fileID: 3843716869417167136}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -339,9 +371,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d86cc4022db2cf64195974fc19ea942d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _durationInSeconds: 1
-  _startFocalLength: 30
+  _durationInSeconds: 0.5
+  _startFocalLength: 50
   _targetFocalLength: 20
+  _startFocusDistance: 0.5
+  _targetFocusDistance: 0.2
+  _startAperture: 8
+  _targetAperture: 14
+  _startIntensity: 0.2
+  _targetIntensity: 1
 --- !u!1 &3843716870331872631
 GameObject:
   m_ObjectHideFlags: 0
