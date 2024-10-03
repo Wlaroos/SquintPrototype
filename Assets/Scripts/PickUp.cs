@@ -10,9 +10,14 @@ public class PickUp : MonoBehaviour
 
     private bool _canPickup; //a bool to see if you can or cant pick up the item
     private bool _hasItem; // a bool to see if you have an item in your hand
+    private bool _isColliding;
     private GameObject _objectIwantToPickUp; // the gameobject onwhich you collided with
     private Rigidbody _rb;
     private float _inspectDistance = 2f;
+
+    private float maxDist = 1;
+    private Vector3 offsetHeight;
+    private Vector3 spherePos;
 
     // Start is called before the first frame update
     void Awake()
@@ -27,6 +32,16 @@ public class PickUp : MonoBehaviour
         MouseScroll();
         PickupItem();
         DropItem();
+
+        if (_hasItem)
+        {
+            _rb.velocity = Vector3.zero;
+        }
+
+        if(!_isColliding && _hasItem)
+        {
+            _rb.transform.localPosition = Vector3.Slerp(_rb.transform.localPosition, Vector3.zero, Time.deltaTime * 5);
+        }
     }
 
     private void OnTriggerEnter(Collider other) // to see when the player enters the collider
@@ -48,6 +63,23 @@ public class PickUp : MonoBehaviour
         _canPickup = false; //when you leave the collider set the canpickup bool to false
     }
 
+
+    private void FixedUpdate()
+    {
+        if (_hasItem)
+        {
+            _isColliding = Physics.CheckSphere(_rb.transform.position, _rb.GetComponent<BoxCollider>().size.x / 2, LayerMask.GetMask("Ground"));
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (_hasItem)
+        {
+            Gizmos.DrawWireSphere(_rb.transform.position, _rb.GetComponent<BoxCollider>().size.x / 2);
+        }
+    }
+
     private void PickupItem()
     {
         if (_canPickup == true) // if you enter thecollider of the objecct
@@ -56,7 +88,8 @@ public class PickUp : MonoBehaviour
             {
                 Debug.Log("PICKUP");
 
-                _rb.constraints = RigidbodyConstraints.FreezePosition;
+                //_rb.constraints = RigidbodyConstraints.FreezePosition;
+                _rb.useGravity = false;
 
                 _objectIwantToPickUp.transform.position = _holder.transform.position; // sets the position of the object to your hand position
 
@@ -75,7 +108,8 @@ public class PickUp : MonoBehaviour
         {
             Debug.Log("DROP");
 
-            _rb.constraints = RigidbodyConstraints.None;
+            //_rb.constraints = RigidbodyConstraints.None;
+            _rb.useGravity = true;
 
             _objectIwantToPickUp.transform.parent = null; // make the object no be a child of the hands
 
