@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PickUp : MonoBehaviour
 {
-    [SerializeField] private GameObject _holder; // Reference to your hands/the position where you want your object to go
+    [SerializeField] public GameObject _holder; // Reference to your hands/the position where you want your object to go
     [SerializeField] private float _minInspectDist = 1;
     [SerializeField] private float _maxInspectDist = 4;
 
-    private bool _canPickup; // A bool to see if you can or cant pick up the item
-    private bool _hasItem; // A bool to see if you have an item in your hand
+    public bool _canPickup; // A bool to see if you can or cant pick up the item
+    public bool _hasItem; // A bool to see if you have an item in your hand
     private bool _isColliding;
     private GameObject _objectIWantToPickUp; // The gameobject on which you collided with
     private Rigidbody _rb;
@@ -29,29 +29,13 @@ public class PickUp : MonoBehaviour
     void Update()
     {
         MouseScroll();
-        PickupItem();
-        DropItem();
+        //PickupItem();
+        //  DropItem();
     }
     
-    private void FixedUpdate()
-    {
-        if (_hasItem)
-        {
-            _isColliding = Physics.CheckSphere(_rb.transform.position, _rb.GetComponent<BoxCollider>().size.x / 2, LayerMask.GetMask("Ground"));
-        }
-        
-        if (_hasItem)
-        {
-            _rb.velocity = Vector3.zero;
-        }
-        
-        if(!_isColliding && _hasItem)
-        {
-            _rb.transform.localPosition = Vector3.Slerp(_rb.transform.localPosition, Vector3.zero, Time.deltaTime * 10);
-        }
-    }
 
-    private void OnTriggerEnter(Collider other) // To see when the player enters the collider
+
+    /*private void OnTriggerEnter(Collider other) // To see when the player enters the collider
     {
         if (other.gameObject.tag == "PickUp") // On the object you want to pick up set the tag to be anything, in this case "object"
         {
@@ -86,7 +70,6 @@ public class PickUp : MonoBehaviour
             {
                 //Debug.Log("PICKUP");
 
-                //_rb.constraints = RigidbodyConstraints.FreezePosition;
                 _rb.constraints = RigidbodyConstraints.FreezeRotation;
                 _rb.useGravity = false;
 
@@ -115,7 +98,7 @@ public class PickUp : MonoBehaviour
 
             _hasItem = false;
         }
-    }
+    }*/
 
     private void MouseScroll()
     {
