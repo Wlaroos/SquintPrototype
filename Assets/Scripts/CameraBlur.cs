@@ -117,4 +117,4 @@ public class CameraBlur : MonoBehaviour
 			yield return null;
 		}
 	}
-}
+}  
