@@ -5536,9 +5536,8 @@ GameObject:
   - component: {fileID: 311064021}
   - component: {fileID: 311064020}
   - component: {fileID: 311064019}
-  - component: {fileID: 311064025}
   - component: {fileID: 311064026}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Basket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5988,19 +5987,6 @@ Transform:
   m_Father: {fileID: 1795289574}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: -132.391, z: 0}
---- !u!65 &311064025
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 311064018}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3, y: 3, z: 3}
-  m_Center: {x: -6.614109, y: 2.3606672, z: -0.46198654}
 --- !u!114 &311064026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6013,6 +5999,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7023b1130e6512b428072fda94a52d27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  holdInteract: 0
+  holdDuration: 1
+  multipleUse: 0
+  isInteractable: 1
+  tooltipMessage: Basket
   _doorLeft: {fileID: 1557975506}
   _doorRight: {fileID: 748889114}
 --- !u!43 &316426777
@@ -20702,14 +20693,14 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 328293434}
-  m_PlaneDistance: 1
+  m_PlaneDistance: 0.4
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 0
+  m_SortingLayerID: 2104006159
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &1225693171
@@ -25266,7 +25257,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1504589780}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.88, y: 0.638, z: -1.725}
+  m_LocalPosition: {x: -1.64, y: 0.638, z: -1.725}
   m_LocalScale: {x: 0.25, y: 0.49, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
