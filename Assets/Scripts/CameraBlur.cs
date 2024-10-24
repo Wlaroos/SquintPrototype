@@ -173,7 +173,7 @@ public class CameraBlur : MonoBehaviour
 		_squintUI.DotDisable();
 		yield return new WaitForSeconds(cooldownAmount);
 
-		Debug.Log("YOU CAN");
+		//Debug.Log("COOLDOWN OVER");
 		_canSquint = true;
 		_squintTimeAmount = 0;
 		_squintUI.DotEnable();

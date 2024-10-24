@@ -20,7 +20,7 @@ public class CollectionTrigger : MonoBehaviour
                 if(item.ItemName == other.name)
                 {
                     item.Collected();
-                    Debug.Log("COLLECTED -- " + other.name);
+                    //Debug.Log("COLLECTED -- " + other.name);
                     Destroy(other.gameObject);
                     break;
                 }
