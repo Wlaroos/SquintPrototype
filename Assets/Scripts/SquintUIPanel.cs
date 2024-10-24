@@ -22,12 +22,12 @@ public class SquintUIPanel : MonoBehaviour
 
     public void DotEnable()
     {
-        _dot.color = new Color32(200, 90, 90, 255);
+        _dot.color = Color.white;
     }
 
     public void DotDisable()
     {
-        _dot.color = new Color32(45, 45, 45, 255);
+        _dot.color = new Color32(120, 120, 120, 255);
     }
 
     public void ResetUI()

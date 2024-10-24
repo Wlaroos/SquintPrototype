@@ -11,7 +11,7 @@ public class ListItem : MonoBehaviour
     public string ItemName => _itemName;
 
     private Image _image;
-    bool _isCollected = false;
+    bool _isCollected;
 
     private void Awake()
     {
@@ -25,11 +25,14 @@ public class ListItem : MonoBehaviour
 
     public void Collected()
     {
-        _isCollected = true;
-
-        if (_spriteList.Length > 1)
+        if (!_isCollected)
         {
-            _image.sprite = _spriteList[1];
+            _isCollected = true;
+
+            if (_spriteList.Length > 1)
+            {
+                _image.sprite = _spriteList[1];
+            }
         }
     }
 }
