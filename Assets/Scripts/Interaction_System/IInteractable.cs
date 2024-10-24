@@ -2,18 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace VHS
-{    
-    public interface IInteractable
-    {
-        float HoldDuration { get; }
+public interface IInteractable
+{
+    float HoldDuration { get; }
 
-        bool HoldInteract { get; }
-        bool MultipleUse { get; }
-        bool IsInteractable { get; }
+    bool HoldInteract { get; }
+    bool MultipleUse { get; }
+    bool IsInteractable { get; }
 
-        string TooltipMessage { get; }
+    string TooltipMessage { get; }
 
-        void OnInteract();
-    }
-}  
+    void OnInteract();
+}
