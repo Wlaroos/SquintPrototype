@@ -18,6 +18,15 @@ public class CameraBlur : MonoBehaviour
 	[Space]
 	[SerializeField] private float _startIntensity = 0.2f;
 	[SerializeField] private float _targetIntensity = 1f;
+	[Space]
+	[SerializeField] private float _maxSquintHold = 3f;
+	[SerializeField] private float _squintCooldown = 3f;
+	[SerializeField] private float _squintTimeAmount = 0f;
+
+	private SquintUIPanel _squintUI;
+
+	private bool _canSquint = true;
+	private bool _isSquint = false;
 
 	private PostProcessLayer v2_PostProcess;
 
@@ -28,14 +37,17 @@ public class CameraBlur : MonoBehaviour
 	private DepthOfField _dph;
 	private Vignette _vg;
 
-	// Start is called on the frame when a script is enabled just before any of the Update methods is called the first time.
-	private void Start()
-	{
+    private void Awake()
+    {
 		v2_PostProcess = GetComponent<PostProcessLayer>();
+		_squintUI = FindObjectOfType<SquintUIPanel>();
+	}
 
+    // Start is called on the frame when a script is enabled just before any of the Update methods is called the first time.
+    private void Start()
+	{
 		PostProcessManager.instance.GetActiveVolumes(v2_PostProcess, volList, true, true);
 
-		//
 		foreach (PostProcessVolume vol in volList)
 		{
 			_vol = vol;
@@ -62,14 +74,21 @@ public class CameraBlur : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.Mouse1))
 		{
-			StopAllCoroutines();
-			StartCoroutine(Focus(_durationInSeconds, false));
+			if (_canSquint)
+			{
+				StopAllCoroutines();
+				StartCoroutine(Focus(_durationInSeconds, false));
+				_squintTimeAmount += 0.5f;
+			}
 		}
 
 		if (Input.GetKeyUp(KeyCode.Mouse1))
 		{
-			StopAllCoroutines();
-			StartCoroutine(Focus(_durationInSeconds, true));
+			if (_canSquint)
+			{
+				StopAllCoroutines();
+				StartCoroutine(Focus(_durationInSeconds, true));
+			}
 		}
 
 		if (Input.GetKeyDown(KeyCode.Z))
@@ -81,6 +100,30 @@ public class CameraBlur : MonoBehaviour
 		{
 			_dph.focalLength.value = 0;
 		}
+
+		if(_isSquint)
+        {
+			_squintTimeAmount += Time.deltaTime;
+			if (_squintTimeAmount >= _maxSquintHold)
+            {
+				_canSquint = false;
+				StopAllCoroutines();
+				StartCoroutine(Focus(_durationInSeconds, true));
+				StartCoroutine(SquintCooldown(_squintCooldown));
+            }
+
+			_squintUI.UpdateProgressBar(_squintTimeAmount / _maxSquintHold);
+		}
+		else
+        {
+			if (_squintTimeAmount > 0)
+			{
+				_squintTimeAmount -= Time.deltaTime;
+			}
+
+			_squintUI.UpdateProgressBar(_squintTimeAmount / _maxSquintHold);
+		}
+
 	}
 
 	private IEnumerator Focus(float blurTime, bool unfocus)
@@ -99,6 +142,8 @@ public class CameraBlur : MonoBehaviour
 
 			if (unfocus)
 			{
+				_isSquint = false;
+
 				_dph.focalLength.value = (Mathf.Lerp(currentFocalLength, _startFocalLength, timeCount / blurTime));
 				_dph.aperture.value = (Mathf.Lerp(currentAperture, _startAperture, timeCount / blurTime));
 				_dph.focusDistance.value = (Mathf.Lerp(currentFocusDistance, _startFocusDistance, timeCount / blurTime));
@@ -107,14 +152,30 @@ public class CameraBlur : MonoBehaviour
 			}
 			else
 			{
-				_dph.focalLength.value = (Mathf.Lerp(currentFocalLength, _targetFocalLength, timeCount / blurTime));
-				_dph.aperture.value = (Mathf.Lerp(currentAperture, _targetAperture, timeCount / blurTime));
-				_dph.focusDistance.value = (Mathf.Lerp(currentFocusDistance, _targetFocusDistance, timeCount / blurTime));
+				if (_canSquint)
+				{
+					_dph.focalLength.value = (Mathf.Lerp(currentFocalLength, _targetFocalLength, timeCount / blurTime));
+					_dph.aperture.value = (Mathf.Lerp(currentAperture, _targetAperture, timeCount / blurTime));
+					_dph.focusDistance.value = (Mathf.Lerp(currentFocusDistance, _targetFocusDistance, timeCount / blurTime));
 
-				_vg.intensity.value = (Mathf.Lerp(currentIntensity, _targetIntensity, timeCount / blurTime));
+					_vg.intensity.value = (Mathf.Lerp(currentIntensity, _targetIntensity, timeCount / blurTime));
+				}
 			}
+
+			_isSquint = !unfocus;
 
 			yield return null;
 		}
 	}
+
+	private IEnumerator SquintCooldown(float cooldownAmount)
+    {
+		_squintUI.DotDisable();
+		yield return new WaitForSeconds(cooldownAmount);
+
+		Debug.Log("YOU CAN");
+		_canSquint = true;
+		_squintTimeAmount = 0;
+		_squintUI.DotEnable();
+    }
 }  
