@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
-public class GroceryList : MonoBehaviour
+public class GroceryListInspect : MonoBehaviour
 {
 	[SerializeField] private GameObject _boxMain;
 	[SerializeField] private GameObject _boxDown;
