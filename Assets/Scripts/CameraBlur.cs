@@ -19,6 +19,12 @@ public class CameraBlur : MonoBehaviour
 	[SerializeField] private float _startIntensity = 0.2f;
 	[SerializeField] private float _targetIntensity = 1f;
 	[Space]
+	[SerializeField] private float _startBloom = 33f;
+	[SerializeField] private float _targetBloom = 5f;
+	[Space]
+	[SerializeField] private float _startDiffuse = 10f;
+	[SerializeField] private float _targetDiffuse = 5f;
+	[Space]
 	[SerializeField] private float _maxSquintHold = 3f;
 	[SerializeField] private float _squintCooldown = 3f;
 	[SerializeField] private float _squintTimeAmount = 0f;
@@ -36,6 +42,7 @@ public class CameraBlur : MonoBehaviour
 	private PostProcessProfile _ppp;
 	private DepthOfField _dph;
 	private Vignette _vg;
+	private Bloom _bm;
 
     private void Awake()
     {
@@ -65,6 +72,12 @@ public class CameraBlur : MonoBehaviour
 				if (ppp.TryGetSettings<Vignette>(out vg))
 				{
 					_vg = vg;
+				}
+
+				Bloom bm;
+				if (ppp.TryGetSettings<Bloom>(out bm))
+				{
+					_bm = bm;
 				}
 			}
 		}
@@ -134,6 +147,9 @@ public class CameraBlur : MonoBehaviour
 		float currentAperture = _dph.aperture.value;
 		float currentFocusDistance = _dph.focusDistance.value;
 
+		float currentBloom = _bm.intensity.value;
+		float currentDiffuse = _bm.diffusion.value;
+
 		float currentIntensity = _vg.intensity.value;
 
 		while (timeCount < blurTime)
@@ -144,21 +160,29 @@ public class CameraBlur : MonoBehaviour
 			{
 				_isSquint = false;
 
-				_dph.focalLength.value = (Mathf.Lerp(currentFocalLength, _startFocalLength, timeCount / blurTime));
-				_dph.aperture.value = (Mathf.Lerp(currentAperture, _startAperture, timeCount / blurTime));
-				_dph.focusDistance.value = (Mathf.Lerp(currentFocusDistance, _startFocusDistance, timeCount / blurTime));
+				_dph.focalLength.value = Mathf.Lerp(currentFocalLength, _startFocalLength, timeCount / blurTime);
+				_dph.aperture.value = Mathf.Lerp(currentAperture, _startAperture, timeCount / blurTime);
+				_dph.focusDistance.value = Mathf.Lerp(currentFocusDistance, _startFocusDistance, timeCount / blurTime);
+				//_dph.kernelSize.value = KernelSize.VeryLarge;
 
-				_vg.intensity.value = (Mathf.Lerp(currentIntensity, _startIntensity, timeCount / blurTime));
+				_bm.intensity.value = Mathf.Lerp(currentBloom, _startBloom, timeCount / blurTime);
+				_bm.diffusion.value = Mathf.Lerp(currentDiffuse, _startDiffuse, timeCount / blurTime);
+
+				_vg.intensity.value = Mathf.Lerp(currentIntensity, _startIntensity, timeCount / blurTime);
 			}
 			else
 			{
 				if (_canSquint)
 				{
-					_dph.focalLength.value = (Mathf.Lerp(currentFocalLength, _targetFocalLength, timeCount / blurTime));
-					_dph.aperture.value = (Mathf.Lerp(currentAperture, _targetAperture, timeCount / blurTime));
-					_dph.focusDistance.value = (Mathf.Lerp(currentFocusDistance, _targetFocusDistance, timeCount / blurTime));
+					_dph.focalLength.value = Mathf.Lerp(currentFocalLength, _targetFocalLength, timeCount / blurTime);
+					_dph.aperture.value = Mathf.Lerp(currentAperture, _targetAperture, timeCount / blurTime);
+					_dph.focusDistance.value = Mathf.Lerp(currentFocusDistance, _targetFocusDistance, timeCount / blurTime);
+					//_dph.kernelSize.value = KernelSize.Medium;
 
-					_vg.intensity.value = (Mathf.Lerp(currentIntensity, _targetIntensity, timeCount / blurTime));
+					_bm.intensity.value = Mathf.Lerp(currentBloom, _targetBloom, timeCount / blurTime);
+					_bm.diffusion.value = Mathf.Lerp(currentDiffuse, _targetDiffuse, timeCount / blurTime);
+
+					_vg.intensity.value = Mathf.Lerp(currentIntensity, _targetIntensity, timeCount / blurTime);
 				}
 			}
 

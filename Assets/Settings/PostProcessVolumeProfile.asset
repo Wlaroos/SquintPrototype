@@ -15,32 +15,9 @@ MonoBehaviour:
   settings:
   - {fileID: 114065399647409342}
   - {fileID: 114501906145162340}
-  - {fileID: 114062315097659046}
   - {fileID: 114981667653416594}
   - {fileID: 114496529088806156}
   - {fileID: 114986950776308208}
---- !u!114 &114062315097659046
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b94fcd11afffcb142908bfcb1e261fba, type: 3}
-  m_Name: MotionBlur
-  m_EditorClassIdentifier: 
-  active: 0
-  enabled:
-    overrideState: 1
-    value: 1
-  shutterAngle:
-    overrideState: 0
-    value: 270
-  sampleCount:
-    overrideState: 0
-    value: 10
 --- !u!114 &114065399647409342
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1419,7 +1396,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 2.5
+    value: 20
   threshold:
     overrideState: 1
     value: 1
@@ -1428,10 +1405,10 @@ MonoBehaviour:
     value: 0.5
   clamp:
     overrideState: 0
-    value: 65472
+    value: 666
   diffusion:
-    overrideState: 0
-    value: 7
+    overrideState: 1
+    value: 6
   anamorphicRatio:
     overrideState: 0
     value: 0

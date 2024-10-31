@@ -42,7 +42,7 @@ public class PickupInteractable : InteractableBase
 
             _holder.transform.localPosition = new Vector3(0, 0, 1);
         }
-        else if (_pickUpPlayerRef._hasItem)
+        else
         {
             _rb.constraints = RigidbodyConstraints.None;
             _rb.useGravity = true;
@@ -50,22 +50,19 @@ public class PickupInteractable : InteractableBase
             transform.parent = null; // Make the object no longer be a child of the hands
 
             _pickUpPlayerRef._hasItem = false;
+            _pickUpPlayerRef._canPickup = true;
         }
     }
 
     private void FixedUpdate()
     {
-        if (_pickUpPlayerRef._hasItem)
+        if (_pickUpPlayerRef._hasItem && transform.parent != null)
         {
             _isColliding = Physics.CheckSphere(_rb.transform.position, _rb.GetComponent<Collider>().bounds.extents.magnitude, LayerMask.GetMask("Ground"));
-        }
-
-        if (_pickUpPlayerRef._hasItem)
-        {
             _rb.velocity = Vector3.zero;
         }
 
-        if (!_isColliding && _pickUpPlayerRef._hasItem)
+        if (!_isColliding && _pickUpPlayerRef._hasItem && transform.parent != null)
         {
             _rb.transform.localPosition = Vector3.Slerp(_rb.transform.localPosition, Vector3.zero, Time.deltaTime * 10);
         }
