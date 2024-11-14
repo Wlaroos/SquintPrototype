@@ -360,13 +360,20 @@ using NaughtyAttributes;
                     if(m_characterController.isGrounded) // Thanks to this check we are not applying extra y velocity when in air so jump will be consistent
                         m_finalMoveVector.y += _finalVector.y ; //so this makes our player go in forward dir using slope normal but when jumping this is making it go higher so this is weird
                 }
-            #endregion
+    #endregion
 
-            #region Crouching Methods
+                #region Crouching Methods
                 protected virtual void HandleCrouch()
                 {
-                    if(movementInputData.CrouchClicked && m_isGrounded)
+                    if (movementInputData.CrouchClicked && m_isGrounded)
+                    {
                         InvokeCrouchRoutine();
+                    }
+                    else if (movementInputData.CrouchReleased && m_isGrounded)
+                    {
+                        InvokeCrouchRoutine();
+                    }
+
                 }
 
                 protected virtual void InvokeCrouchRoutine()

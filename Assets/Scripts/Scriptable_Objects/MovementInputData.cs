@@ -10,6 +10,7 @@ public class MovementInputData : ScriptableObject
     bool m_isCrouching;
 
     bool m_crouchClicked;
+    bool m_crouchReleased;
     bool m_jumpClicked;
 
     bool m_runClicked;
@@ -47,6 +48,12 @@ public class MovementInputData : ScriptableObject
         set => m_crouchClicked = value;
     }
 
+    public bool CrouchReleased
+    {
+        get => m_crouchReleased;
+        set => m_crouchReleased = value;
+    }
+
     public bool JumpClicked
     {
         get => m_jumpClicked;
@@ -75,6 +82,7 @@ public class MovementInputData : ScriptableObject
         m_isCrouching = false;
 
         m_crouchClicked = false;
+        m_crouchReleased = false;
         m_jumpClicked = false;
         m_runClicked = false;
         m_runReleased = false;
