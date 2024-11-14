@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 
-namespace  VHS
-{    
     public class HeadBob
     {
         #region Variables
@@ -82,4 +80,3 @@ namespace  VHS
             }
         #endregion
     }
-}

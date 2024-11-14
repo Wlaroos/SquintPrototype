@@ -2,8 +2,6 @@
 using UnityEngine;
 using NaughtyAttributes;
 
-namespace VHS
-{
     [RequireComponent(typeof(CharacterController))]
     public class FirstPersonController : MonoBehaviour
     {
@@ -570,4 +568,3 @@ namespace VHS
             #endregion
         #endregion
     }
-}

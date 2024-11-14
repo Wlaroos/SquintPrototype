@@ -1,8 +1,6 @@
 using UnityEngine;
 using NaughtyAttributes;
-
-namespace VHS
-{    
+ 
     public class InputHandler : MonoBehaviour
     {
         #region Data
@@ -63,4 +61,3 @@ namespace VHS
             }
         #endregion
     }
-}

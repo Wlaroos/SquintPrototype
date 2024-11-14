@@ -5,10 +5,12 @@ using UnityEngine;
 public class CollectionTrigger : MonoBehaviour
 {
     private ListItem[] _groceryItemList;
+    private ItemManager _itemManager;
 
     private void Awake()
     {
         _groceryItemList = FindObjectsOfType<ListItem>();
+        _itemManager = FindObjectOfType<ItemManager>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -20,8 +22,10 @@ public class CollectionTrigger : MonoBehaviour
                 if(item.ItemName == other.name)
                 {
                     item.Collected();
+                    _itemManager.CollectedItem();
                     //Debug.Log("COLLECTED -- " + other.name);
                     Destroy(other.gameObject);
+
                     break;
                 }
             }
