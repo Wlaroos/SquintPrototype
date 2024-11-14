@@ -33,5 +33,11 @@ public class InteractableBase : MonoBehaviour, IInteractable
     {
         //Debug.Log("INTERACTED: " + gameObject.name);
     }
+
+    public void SetTooltip(string text)
+    {
+        tooltipMessage = text;
+        name = tooltipMessage;
+    }
     #endregion
 }

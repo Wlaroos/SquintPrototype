@@ -106,12 +106,12 @@ public class CameraBlur : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.Z))
 		{
-			_dph.focalLength.value = 50;
+			BlurryVision();
 		}
 
 		if (Input.GetKeyDown(KeyCode.X))
 		{
-			_dph.focalLength.value = 0;
+			SquintVision();
 		}
 
 		if(_isSquint)
@@ -201,5 +201,34 @@ public class CameraBlur : MonoBehaviour
 		_canSquint = true;
 		_squintTimeAmount = 0;
 		_squintUI.DotEnable();
+    }
+
+	private void SquintVision()
+    {
+		_dph.focalLength.value = _targetFocalLength;
+		_dph.aperture.value = _targetAperture;
+		_dph.focusDistance.value = _targetFocusDistance;
+
+		_bm.intensity.value = _targetBloom;
+		_bm.diffusion.value = _targetDiffuse;
+
+		_vg.intensity.value = _targetIntensity;
+	}
+
+	public void BlurryVision()
+    {
+		_dph.focalLength.value = _startFocalLength;
+		_dph.aperture.value = _startAperture;
+		_dph.focusDistance.value = _startFocusDistance;
+
+		_bm.intensity.value = _startBloom;
+		_bm.diffusion.value = _startDiffuse;
+
+		_vg.intensity.value = _startIntensity;
+	}
+
+	public void GlassesBreak()
+    {
+		BlurryVision();
     }
 }  

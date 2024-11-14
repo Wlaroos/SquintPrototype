@@ -12,7 +12,7 @@ public class PickupInteractable : InteractableBase
 
     private void Awake()
     {
-        _pickUpPlayerRef = GameObject.FindObjectOfType<PickUp>();
+        _pickUpPlayerRef = FindObjectOfType<PickUp>();
         _holder = _pickUpPlayerRef._holder;
         _rb = GetComponent<Rigidbody>();
 
@@ -58,7 +58,15 @@ public class PickupInteractable : InteractableBase
     {
         if (_pickUpPlayerRef._hasItem && transform.parent != null)
         {
-            _isColliding = Physics.CheckSphere(_rb.transform.position, _rb.GetComponent<Collider>().bounds.extents.magnitude, LayerMask.GetMask("Ground"));
+            if (_rb.GetComponent<Collider>() != null)
+            {
+                _isColliding = Physics.CheckSphere(_rb.transform.position, _rb.GetComponent<Collider>().bounds.extents.magnitude, LayerMask.GetMask("Ground"));
+            }
+            else if(_rb.GetComponentInChildren<Collider>() != null)
+            {
+                _isColliding = Physics.CheckSphere(_rb.transform.position, _rb.GetComponentInChildren<Collider>().bounds.extents.magnitude, LayerMask.GetMask("Ground"));
+            }
+            
             _rb.velocity = Vector3.zero;
         }
 
