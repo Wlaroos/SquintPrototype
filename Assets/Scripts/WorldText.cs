@@ -15,10 +15,15 @@ public class WorldText : MonoBehaviour
         if(_twoSided)
         {
             _text2.gameObject.SetActive(true);
+
             Vector3 textpos = _text1.transform.localPosition;
+
             _text2.GetComponent<TextMeshPro>().text = _text1.GetComponent<TextMeshPro>().text;
-            _text2.GetComponent<TextMeshPro>().margin = _text1.GetComponent<TextMeshPro>().margin;
-            _text2.transform.localPosition = new Vector3(-textpos.x, textpos.y, _cube.transform.localScale.z + 0.01f);
+
+            _text2.GetComponent<RectTransform>().sizeDelta = _text1.GetComponent<RectTransform>().sizeDelta;
+
+            _text2.transform.localPosition = new Vector3(0, 0, _cube.transform.localScale.z + 0.01f);
+
             _text2.transform.localRotation = Quaternion.Euler(0, 180, 0);
         }
     }

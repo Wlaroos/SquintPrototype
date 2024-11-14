@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
@@ -30,8 +31,9 @@ public class CameraBlur : MonoBehaviour
 	[SerializeField] private float _squintTimeAmount = 0f;
 
 	private SquintUIPanel _squintUI;
+	private bool _fadeDoOnce;
 
-	private bool _canSquint = true;
+	private bool _canSquint = false;
 	private bool _isSquint = false;
 
 	private PostProcessLayer v2_PostProcess;
@@ -92,6 +94,12 @@ public class CameraBlur : MonoBehaviour
 				StopAllCoroutines();
 				StartCoroutine(Focus(_durationInSeconds, false));
 				_squintTimeAmount += 0.5f;
+
+				if(!_fadeDoOnce)
+                {
+					_squintUI.StartSquintTextFade(0, 2);
+					_fadeDoOnce = true;
+				}
 			}
 		}
 
@@ -229,6 +237,8 @@ public class CameraBlur : MonoBehaviour
 
 	public void GlassesBreak()
     {
+		_canSquint = true;
+		_squintUI.ShowTutText();
 		BlurryVision();
     }
 }  

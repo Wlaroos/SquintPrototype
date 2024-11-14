@@ -19,7 +19,7 @@ public class Glasses : MonoBehaviour
     {
         if (collision.gameObject.layer == _groundLayer)
         {
-            Debug.Log("HIT GROUND");
+            //Debug.Log("HIT GROUND");
             GetComponent<PickupInteractable>().SetTooltip("Broken Glasses");
             _glassesNotBroken.SetActive(false);
             _glassesBroken.SetActive(true);

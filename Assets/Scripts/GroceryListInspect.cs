@@ -16,13 +16,18 @@ public class GroceryListInspect : MonoBehaviour
 	private Vector3 _startRot;
 	private Vector3 _targetRot;
 
-	// Start is called on the frame when a script is enabled just before any of the Update methods is called the first time.
-	private void Awake()
+    private SquintUIPanel _squintUI;
+	private bool _tutDoOnce;
+
+    // Start is called on the frame when a script is enabled just before any of the Update methods is called the first time.
+    private void Awake()
 	{
 		_startPos = _boxDown.transform.localPosition;
 		_startRot = _boxDown.transform.localRotation.eulerAngles;
 		_targetPos = _boxUp.transform.localPosition;
 		_targetRot = _boxUp.transform.localRotation.eulerAngles;
+
+		_squintUI = FindObjectOfType<SquintUIPanel>();
 	}
 
 	private void Update()
@@ -31,6 +36,12 @@ public class GroceryListInspect : MonoBehaviour
 		{
 			StopAllCoroutines();
 			StartCoroutine(Focus(_durationInSeconds, false));
+
+			if(!_tutDoOnce)
+            {
+				_squintUI.StartListTextFade(0,2);
+				_tutDoOnce = true;
+            }
 		}
 
 		if (Input.GetKeyUp(KeyCode.Q))

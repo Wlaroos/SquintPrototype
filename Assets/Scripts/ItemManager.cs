@@ -6,6 +6,9 @@ public class ItemManager : MonoBehaviour
 {
     [SerializeField] private GameObject _glassesPrefab;
 
+    private ListItem[] _groceryItemArray;
+    private List<ListItem> _groceryItemList = new List<ListItem>();
+
     private CameraBlur _blurRef;
     private int _amountGathered;
     private DoorTrigger _doorTrigger;
@@ -18,11 +21,39 @@ public class ItemManager : MonoBehaviour
     {
         _pickUpPlayerRef = FindObjectOfType<PickUp>();
         _holder = _pickUpPlayerRef._holder;
+
         _blurRef = FindObjectOfType<CameraBlur>();
         _doorTrigger = FindObjectOfType<DoorTrigger>();
+
+        _groceryItemArray = FindObjectsOfType<ListItem>();
+
+        foreach (var item in _groceryItemArray)
+        {
+            _groceryItemList.Add(item);
+        }
     }
 
-    public void CollectedItem()
+    public void CollisionCheck(Collider other)
+    {
+        foreach (var item in _groceryItemList)
+        {
+            if (item.ItemName == other.name)
+            {
+                item.Collected();
+                CollectedItem();
+
+                _groceryItemList.Remove(item);
+
+                //Debug.Log("COLLECTED -- " + other.name);
+
+                Destroy(other.gameObject);
+
+                break;
+            }
+        }
+    }
+
+    private void CollectedItem()
     {
         _amountGathered++;
 
