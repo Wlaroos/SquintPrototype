@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class CollectionTrigger : MonoBehaviour
 {
-    private ListItem[] _groceryItemList;
+    private ListItem[] _groceryItemArray;
+    private List<ListItem> _groceryItemList = new List<ListItem>();
     private ItemManager _itemManager;
 
     private void Awake()
     {
-        _groceryItemList = FindObjectsOfType<ListItem>();
+        _groceryItemArray = FindObjectsOfType<ListItem>();
         _itemManager = FindObjectOfType<ItemManager>();
+
+        foreach (var item in _groceryItemArray)
+        {
+            _groceryItemList.Add(item);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -23,7 +29,11 @@ public class CollectionTrigger : MonoBehaviour
                 {
                     item.Collected();
                     _itemManager.CollectedItem();
+
+                    _groceryItemList.Remove(item);
+
                     //Debug.Log("COLLECTED -- " + other.name);
+
                     Destroy(other.gameObject);
 
                     break;
