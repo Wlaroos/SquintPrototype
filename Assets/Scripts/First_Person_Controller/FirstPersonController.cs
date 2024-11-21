@@ -365,22 +365,17 @@ using NaughtyAttributes;
                 #region Crouching Methods
                 protected virtual void HandleCrouch()
                 {
-                    if (movementInputData.CrouchClicked && m_isGrounded)
+                    if (movementInputData.CrouchClicked || movementInputData.CrouchReleased && m_isGrounded)
                     {
                         InvokeCrouchRoutine();
                     }
-                    else if (movementInputData.CrouchReleased && m_isGrounded)
-                    {
-                        InvokeCrouchRoutine();
-                    }
-
                 }
 
                 protected virtual void InvokeCrouchRoutine()
                 {
-                    if(movementInputData.IsCrouching)
+                  /*  if(movementInputData.IsCrouching)
                         if(CheckIfRoof())
-                            return;
+                            return;*/
 
                     if(m_LandRoutine != null)
                         StopCoroutine(m_LandRoutine);

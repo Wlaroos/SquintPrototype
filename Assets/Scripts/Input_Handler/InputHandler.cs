@@ -56,7 +56,7 @@ using NaughtyAttributes;
                 if(movementInputData.RunReleased)
                     movementInputData.IsRunning = false;
 
-                movementInputData.JumpClicked = Input.GetKeyDown(KeyCode.Space);
+                //movementInputData.JumpClicked = Input.GetKeyDown(KeyCode.Space);
                 movementInputData.CrouchClicked = Input.GetKeyDown(KeyCode.LeftControl);
                 movementInputData.CrouchReleased = Input.GetKeyUp(KeyCode.LeftControl);
             }
