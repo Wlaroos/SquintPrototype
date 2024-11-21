@@ -7,6 +7,7 @@ public class ItemManager : MonoBehaviour
     [SerializeField] private GameObject _glassesPrefab;
 
     private ListItem[] _groceryItemArray;
+    private SelfCheckoutDoorTrigger[] _selfCheckoutArray;
     private List<ListItem> _groceryItemList = new List<ListItem>();
 
     private CameraBlur _blurRef;
@@ -27,6 +28,7 @@ public class ItemManager : MonoBehaviour
         _doorTrigger = FindObjectOfType<DoorTrigger>();
 
         _groceryItemArray = FindObjectsOfType<ListItem>();
+        _selfCheckoutArray = FindObjectsOfType<SelfCheckoutDoorTrigger>();
 
         _squintUIRef = FindObjectOfType<SquintUIPanel>();
 
@@ -71,6 +73,11 @@ public class ItemManager : MonoBehaviour
             Debug.Log("You Got All of Them!");
             _squintUIRef.SetObjectiveText("Go to self checkout");
             _doorTrigger.OpenDoor();
+
+            foreach (var item in _selfCheckoutArray)
+            {
+                item.Activate();
+            }
         }
     }
 

@@ -3,15 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoorTrigger : InteractableBase
+public class SelfCheckoutDoorTrigger : InteractableBase
 {
     [SerializeField] private GameObject _doorLeft;
     [SerializeField] private GameObject _doorRight;
+    [SerializeField] private GameObject _groceryBagPrefab;
 
     private Vector3 _doorLeftOpenPos;
     private Vector3 _doorLeftClosePos;
     private Vector3 _doorRightOpenPos;
     private Vector3 _doorRightClosePos;
+
+    private bool _isActive;
+    private string _tooltip;
 
     private void Awake()
     {
@@ -19,14 +23,29 @@ public class DoorTrigger : InteractableBase
         _doorRightClosePos = _doorRight.transform.localPosition;
         _doorLeftOpenPos = new Vector3(25.775f, -1, 5.654f);
         _doorRightOpenPos = new Vector3(30f, -1, 1.44f);
+
+        this.enabled = false;
+        _tooltip = base.TooltipMessage;
+        base.SetTooltip("");
     }
 
     public override void OnInteract()
     {
-        base.OnInteract();
+        if (_isActive)
+        {
+            base.OnInteract();
 
-        StopAllCoroutines();
-        StartCoroutine(DoorOpen());
+            StopAllCoroutines();
+            StartCoroutine(DoorOpen());
+
+            Instantiate(_groceryBagPrefab, new Vector3(transform.position.x + 0.3f, transform.position.y + 0.5f, transform.position.z + 0.2f), Quaternion.Euler(0, 90, 0));
+
+            SelfCheckoutDoorTrigger[] array = FindObjectsOfType<SelfCheckoutDoorTrigger>();
+            foreach (var item in array)
+            {
+                Destroy(item);
+            }
+        }
     }
 
     private IEnumerator DoorOpen()
@@ -64,5 +83,11 @@ public class DoorTrigger : InteractableBase
     {
         StopAllCoroutines();
         StartCoroutine(DoorClose());
+    }
+
+    public void Activate()
+    {
+        _isActive = true;
+        base.SetTooltip(_tooltip);
     }
 }
