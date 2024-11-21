@@ -11,13 +11,14 @@ public class SquintUIPanel : MonoBehaviour
     [SerializeField] private Image _dot;
     [SerializeField] private TextMeshProUGUI _squintTutText;
     [SerializeField] private TextMeshProUGUI _listTutText;
+    [SerializeField] private TextMeshProUGUI _objectiveText;
 
     private bool _isRunning;
     private bool _doOnce;
 
     private void Awake()
     {
-        StartListTextFade(2, 2);
+        StartListTextFade(5, 2);
     }
 
     public void SetTooltip(string tooltip)
@@ -64,6 +65,11 @@ public class SquintUIPanel : MonoBehaviour
     {
         StopAllCoroutines();
         StartCoroutine(FadeText(_squintTutText, delay, time));
+    }
+
+    public void SetObjectiveText(string text)
+    {
+        _objectiveText.text = "Objective: " + text;
     }
 
     private IEnumerator FadeText(TextMeshProUGUI text, float delay, float fadeTime)

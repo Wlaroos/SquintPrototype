@@ -15,6 +15,7 @@ public class ItemManager : MonoBehaviour
     private float _eventDelaySeconds = 2;
     private PickUp _pickUpPlayerRef;
     private GameObject _holder;
+    private SquintUIPanel _squintUIRef;
 
     // Start is called before the first frame update
     void Awake()
@@ -26,6 +27,8 @@ public class ItemManager : MonoBehaviour
         _doorTrigger = FindObjectOfType<DoorTrigger>();
 
         _groceryItemArray = FindObjectsOfType<ListItem>();
+
+        _squintUIRef = FindObjectOfType<SquintUIPanel>();
 
         foreach (var item in _groceryItemArray)
         {
@@ -66,6 +69,7 @@ public class ItemManager : MonoBehaviour
         else if (_amountGathered >= 5)
         {
             Debug.Log("You Got All of Them!");
+            _squintUIRef.SetObjectiveText("Go to self checkout");
             _doorTrigger.OpenDoor();
         }
     }
