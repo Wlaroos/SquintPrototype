@@ -41,11 +41,6 @@ public class SelfCheckoutDoorTrigger : InteractableBase
         {
             item.gameObject.SetActive(false);
         }
-
-        foreach (var item in _doorArray)
-        {
-            Destroy(item);
-        }
     }
 
     public override void OnInteract()
@@ -64,6 +59,11 @@ public class SelfCheckoutDoorTrigger : InteractableBase
             foreach (var item in _exitArray)
             {
                 item.gameObject.SetActive(true);
+            }
+
+            foreach (var item in _doorArray)
+            {
+                Destroy(item);
             }
 
         }
