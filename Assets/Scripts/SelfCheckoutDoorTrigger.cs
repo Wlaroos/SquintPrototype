@@ -9,6 +9,11 @@ public class SelfCheckoutDoorTrigger : InteractableBase
     [SerializeField] private GameObject _doorRight;
     [SerializeField] private GameObject _groceryBagPrefab;
 
+    private SquintUIPanel _squintUIRef;
+
+    private ExitDoor[] _exitArray;
+    private SelfCheckoutDoorTrigger[] _doorArray;
+
     private Vector3 _doorLeftOpenPos;
     private Vector3 _doorLeftClosePos;
     private Vector3 _doorRightOpenPos;
@@ -19,6 +24,10 @@ public class SelfCheckoutDoorTrigger : InteractableBase
 
     private void Awake()
     {
+        _squintUIRef = FindObjectOfType<SquintUIPanel>();
+        _exitArray = FindObjectsOfType<ExitDoor>();
+        _doorArray = FindObjectsOfType<SelfCheckoutDoorTrigger>();
+
         _doorLeftClosePos = _doorLeft.transform.localPosition;
         _doorRightClosePos = _doorRight.transform.localPosition;
         _doorLeftOpenPos = new Vector3(25.775f, -1, 5.654f);
@@ -27,6 +36,16 @@ public class SelfCheckoutDoorTrigger : InteractableBase
         this.enabled = false;
         _tooltip = base.TooltipMessage;
         base.SetTooltip("");
+
+        foreach (var item in _exitArray)
+        {
+            item.gameObject.SetActive(false);
+        }
+
+        foreach (var item in _doorArray)
+        {
+            Destroy(item);
+        }
     }
 
     public override void OnInteract()
@@ -38,13 +57,15 @@ public class SelfCheckoutDoorTrigger : InteractableBase
             StopAllCoroutines();
             StartCoroutine(DoorOpen());
 
+            _squintUIRef.SetObjectiveText("Exit the store");
+
             Instantiate(_groceryBagPrefab, new Vector3(transform.position.x + 0.3f, transform.position.y + 0.5f, transform.position.z + 0.2f), Quaternion.Euler(0, 90, 0));
 
-            SelfCheckoutDoorTrigger[] array = FindObjectsOfType<SelfCheckoutDoorTrigger>();
-            foreach (var item in array)
+            foreach (var item in _exitArray)
             {
-                Destroy(item);
+                item.gameObject.SetActive(true);
             }
+
         }
     }
 

@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Grocery.unity
     guid: a67987b8e62c83d47ae2190e3fea5a5d
+  - enabled: 1
+    path: Assets/Scenes/EndingScreen.unity
+    guid: 3c2a1924baedb9e4ca8faffd582cfdc9
   m_configObjects: {}
