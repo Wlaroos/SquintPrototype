@@ -7,6 +7,8 @@ public class DoorTrigger : InteractableBase
 {
     [SerializeField] private GameObject _doorLeft;
     [SerializeField] private GameObject _doorRight;
+    
+    [SerializeField] private AudioClip _doorOpenSFX;
 
     private Vector3 _doorLeftOpenPos;
     private Vector3 _doorLeftClosePos;
@@ -25,8 +27,7 @@ public class DoorTrigger : InteractableBase
     {
         base.OnInteract();
 
-        StopAllCoroutines();
-        StartCoroutine(DoorOpen());
+        OpenDoor();
     }
 
     private IEnumerator DoorOpen()
@@ -59,10 +60,12 @@ public class DoorTrigger : InteractableBase
     {
         StopAllCoroutines();
         StartCoroutine(DoorOpen());
+        AudioHelper.PlayClip2D(_doorOpenSFX, 0.5f);
     }
     public void CloseDoor()
     {
         StopAllCoroutines();
         StartCoroutine(DoorClose());
+        AudioHelper.PlayClip2D(_doorOpenSFX, 0.5f);
     }
 }

@@ -7,6 +7,8 @@ public class Glasses : MonoBehaviour
     private LayerMask _groundLayer;
     private GameObject _glassesNotBroken;
     private GameObject _glassesBroken;
+    
+    [SerializeField] private AudioClip _glassBreakSFX;
 
     private void Awake()
     {
@@ -23,6 +25,8 @@ public class Glasses : MonoBehaviour
             GetComponent<PickupInteractable>().SetTooltip("Broken Glasses");
             _glassesNotBroken.SetActive(false);
             _glassesBroken.SetActive(true);
+            
+            AudioHelper.PlayClip2D(_glassBreakSFX, 1f);
         }
     }
 }

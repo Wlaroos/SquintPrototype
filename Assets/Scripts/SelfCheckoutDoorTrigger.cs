@@ -8,6 +8,8 @@ public class SelfCheckoutDoorTrigger : InteractableBase
     [SerializeField] private GameObject _doorLeft;
     [SerializeField] private GameObject _doorRight;
     [SerializeField] private GameObject _groceryBagPrefab;
+    
+    [SerializeField] private AudioClip _doorOpenSFX;
 
     private SquintUIPanel _squintUIRef;
 
@@ -49,8 +51,7 @@ public class SelfCheckoutDoorTrigger : InteractableBase
         {
             base.OnInteract();
 
-            StopAllCoroutines();
-            StartCoroutine(DoorOpen());
+            OpenDoor();
 
             _squintUIRef.SetObjectiveText("Exit the store");
 
@@ -60,50 +61,29 @@ public class SelfCheckoutDoorTrigger : InteractableBase
             {
                 item.gameObject.SetActive(true);
             }
-
-            foreach (var item in _doorArray)
-            {
-                Destroy(item);
-            }
-
         }
     }
 
     private IEnumerator DoorOpen()
     {
-
         while (Vector3.Distance(_doorLeft.transform.localPosition, _doorLeftOpenPos) > 0.01f)
         {
             _doorLeft.transform.localPosition = Vector3.Lerp(_doorLeft.transform.localPosition, _doorLeftOpenPos, Time.deltaTime * 2);
             _doorRight.transform.localPosition = Vector3.Lerp(_doorRight.transform.localPosition, _doorRightOpenPos, Time.deltaTime * 2);
             yield return null;
         }
-
-        //Destroy(this);
-    }
-
-    private IEnumerator DoorClose()
-    {
-        while (Vector3.Distance(_doorLeft.transform.localPosition, _doorLeftClosePos) > 0.01f)
+        
+        foreach (var item in _doorArray)
         {
-            _doorLeft.transform.localPosition = Vector3.Lerp(_doorLeft.transform.localPosition, _doorLeftClosePos, Time.deltaTime * 2);
-            _doorRight.transform.localPosition = Vector3.Lerp(_doorRight.transform.localPosition, _doorRightClosePos, Time.deltaTime * 2);
-            yield return null;
+            Destroy(item);
         }
-
-        //Destroy(this);
     }
-
-
+    
     public void OpenDoor()
     {
         StopAllCoroutines();
         StartCoroutine(DoorOpen());
-    }
-    public void CloseDoor()
-    {
-        StopAllCoroutines();
-        StartCoroutine(DoorClose());
+        AudioHelper.PlayClip2D(_doorOpenSFX, 0.5f);
     }
 
     public void Activate()

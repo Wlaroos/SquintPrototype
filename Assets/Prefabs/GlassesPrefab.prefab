@@ -64,6 +64,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d15458be03de6442a6c90caf0a3af03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _glassBreakSFX: {fileID: 8300000, guid: 142d9ec6c8391cf43b640627de56618b, type: 3}
 --- !u!114 &645151000527998270
 MonoBehaviour:
   m_ObjectHideFlags: 0

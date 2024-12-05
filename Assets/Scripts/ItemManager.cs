@@ -5,6 +5,9 @@ using UnityEngine;
 public class ItemManager : MonoBehaviour
 {
     [SerializeField] private GameObject _glassesPrefab;
+    
+    [SerializeField] private AudioClip _collectSFX;
+    [SerializeField] private AudioClip _hitSFX;
 
     private ListItem[] _groceryItemArray;
     private SelfCheckoutDoorTrigger[] _selfCheckoutArray;
@@ -61,7 +64,9 @@ public class ItemManager : MonoBehaviour
     private void CollectedItem()
     {
         _amountGathered++;
-
+        
+        AudioHelper.PlayClip2D(_collectSFX, 1);
+        
         //Debug.Log(_amountGathered);
 
         if(_amountGathered == 2)
@@ -72,8 +77,7 @@ public class ItemManager : MonoBehaviour
         {
             Debug.Log("You Got All of Them!");
             _squintUIRef.SetObjectiveText("Go to self checkout");
-            _doorTrigger.OpenDoor();
-
+            
             foreach (var item in _selfCheckoutArray)
             {
                 item.Activate();
@@ -89,6 +93,8 @@ public class ItemManager : MonoBehaviour
         GameObject glasses = Instantiate(_glassesPrefab, _holder.transform.position, Quaternion.Euler(_holder.transform.rotation.eulerAngles + new Vector3(0,-90,0)));
 
         glasses.GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward * 100);
+        
+        AudioHelper.PlayClip2D(_hitSFX, 1);
         //glasses.GetComponent<Rigidbody>().useGravity = false;
     }
 }

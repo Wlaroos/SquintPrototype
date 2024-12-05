@@ -12,6 +12,8 @@ public class SquintUIPanel : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _squintTutText;
     [SerializeField] private TextMeshProUGUI _listTutText;
     [SerializeField] private TextMeshProUGUI _objectiveText;
+    
+    [SerializeField] private AudioClip _checkpointSFX;
 
     private bool _isRunning;
     private bool _doOnce;
@@ -70,6 +72,7 @@ public class SquintUIPanel : MonoBehaviour
     public void SetObjectiveText(string text)
     {
         _objectiveText.text = "Objective: " + text;
+        AudioHelper.PlayClip2D(_checkpointSFX, 1);
     }
 
     private IEnumerator FadeText(TextMeshProUGUI text, float delay, float fadeTime)
